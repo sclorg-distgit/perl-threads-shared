@@ -4,7 +4,7 @@
 
 Name:           %{?scl_prefix}perl-threads-shared
 Version:        1.60
-Release:        451%{?dist}
+Release:        452%{?dist}
 Summary:        Perl extension for sharing data structures between threads
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/threads-shared
@@ -56,6 +56,7 @@ Win32). It is used together with the threads module.
 %setup -q -n threads-shared-%{base_version}
 %patch0 -p1
 %patch1 -p1
+%{?scl:scl enable %{scl} '}perl -MConfig -i -pe %{?scl:'"}'%{?scl:"'}s{^#!/usr/bin/perl}{$Config{startperl}}%{?scl:'"}'%{?scl:"'} examples/*%{?scl:'}
 
 %build
 %{?scl:scl enable %{scl} '}perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1 OPTIMIZE="$RPM_OPT_FLAGS" && %{make_build}%{?scl:'}
@@ -77,6 +78,9 @@ unset GIT_DIR PERL_BUILD_PACKAGING PERL_CORE PERL_RUNPERL_DEBUG \
 %{_mandir}/man3/*
 
 %changelog
+* Tue Mar 17 2020 Petr Pisar <ppisar@redhat.com> - 1.60-452
+- Normalize shebangs in the examples (bug #1813352)
+
 * Thu Jan 02 2020 Jitka Plesnikova <jplesnik@redhat.com> - 1.60-451
 - SCL
 
